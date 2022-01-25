@@ -1,0 +1,167 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+      "title": "Secured Routes",
+      "description": "",
+      "version": "1.0.0"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:4001",
+        "description": "SwaggerHub API Auto Mocking"
+      }
+    ],
+    "tags": [
+      {
+        "name": "customer",
+        "description": "Everything about your Customers",
+        "externalDocs": {
+          "description": "Find out more",
+          "url": "http://swagger.io"
+        }
+      }
+    ],
+    "paths": {
+      "/customer/{id}/setup-accounts": {
+        "post": {
+          "tags": [
+            "customer"
+          ],
+          "summary": "Add a new customer",
+          "operationId": "addCustomer",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "add customer ID",
+              "required": true,
+              "style": "simple",
+              "explode": false,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "requestBody": {
+            "description": "customerId",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/id_setupaccounts_body"
+                }
+              }
+            },
+            "required": true
+          },
+          "responses": {
+            "200": {
+              "description": "Successful Operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid Customer ID"
+            }
+          }
+        }
+      },
+      "/customer/{id}/device-metadata": {
+        "get": {
+          "tags": [
+            "customer"
+          ],
+          "summary": "get device metadata from customer",
+          "operationId": "getCustomerDeviceMetadata",
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "customerId",
+              "required": true,
+              "style": "simple",
+              "explode": false,
+              "schema": {
+                "type": "string",
+                "format": "uuid"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful Operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Metadata"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "components": {
+      "schemas": {
+        "User": {
+          "required": [
+            "id",
+            "name"
+          ],
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "integer",
+              "format": "int64"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "Metadata": {
+          "type": "object",
+          "properties": {
+            "appName": {
+              "type": "string"
+            },
+            "appVersion": {
+              "type": "string"
+            },
+            "deviceId": {
+              "type": "string"
+            },
+            "deviceModel": {
+              "type": "string"
+            },
+            "manufacturer": {
+              "type": "string"
+            },
+            "os": {
+              "type": "string"
+            },
+            "osVersion": {
+              "type": "string"
+            }
+          }
+        },
+        "id_setupaccounts_body": {
+          "type": "object",
+          "properties": {
+            "updateConsentData": {
+              "type": "boolean"
+            },
+            "force": {
+              "type": "boolean"
+            }
+          }
+        }
+      }
+    }
+  }
